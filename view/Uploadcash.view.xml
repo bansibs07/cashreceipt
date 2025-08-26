@@ -1,0 +1,74 @@
+<mvc:View controllerName="bcbsmn.com.cashreceipt.controller.Uploadcash"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m"
+    xmlns:t="sap.ui.table"
+    xmlns:l="sap.ui.layout"
+    xmlns:u="sap.ui.unified">
+    <Page id="Pageuploadcash">       
+        <content>           
+            <t:Table id="table" rows="{fileDataModel>/items}" ariaLabelledBy="title" selectionMode="None">
+                <t:extension>
+                    <OverflowToolbar id="oft">
+                        <u:FileUploader id="FileUploaderId" iconOnly="false" sameFilenameAllowed="true" buttonText="Select a File to Upload" buttonOnly="false" fileType="XLSX,xlsx" icon="sap-icon://upload" iconFirst="false" style="Emphasized" change="onUploadFile">
+                        </u:FileUploader>
+                        <ToolbarSpacer id="tbs"/>
+                        <Button id="fbSubmit" text="Submit" type="Emphasized" press="onSubmit"/>
+                        <Button id="fbClear" text="Clear" type="Emphasized" press="onClear"/>
+                        <Button id="fbBack" text="Back" type="Emphasized" press="onBack"/>
+                       </OverflowToolbar>
+                </t:extension>
+                <t:columns>
+                    <t:Column id="colTask">
+                        <Label id="lblCheck" text="Check Number"/>
+                        <t:template>
+                            <Text id="text1" text="{fileDataModel>CheckNumber/}"/>
+                        </t:template>
+                    </t:Column>
+                    <t:Column id="colPayeename">
+                        <Label id="lblPayeename" text="Payee Name"/>
+                        <t:template>
+                            <Input id="text2" value="{fileDataModel>PayeeName}" liveChange="_toUppercase"/>
+                        </t:template>
+                    </t:Column>
+                    <t:Column id="colImagenumber">
+                        <Label id="lblImagenumber" text="Image Number"/>
+                        <t:template>
+                            <Text id="text3" text="{fileDataModel>ImageNumber}"/>
+                        </t:template>
+                    </t:Column>
+                    <t:Column id="colCheckamount" hAlign="End">
+                        <Label id="lblCheckamount" text="Check Amount"/>
+                        <t:template>
+                            <Text id="text4" text="{ path: 'fileDataModel>CheckAmount', type: 'sap.ui.model.type.Float',  formatOptions: { minFractionDigits: 2, maxFractionDigits: 2 } }"/>
+                        </t:template>
+                    </t:Column>
+                    <t:Column id="colCrn">
+                        <Label id="lblCrn" text="CRN"/>
+                        <t:template>
+                            <Text id="text5" text="{fileDataModel>CRN}"/>
+                        </t:template>
+                    </t:Column>
+                    <t:Column id="colDepositdate">
+                        <Label id="lblDepositdate" text="Deposit Date"/>
+                        <t:template>
+                            <Text id="text6" text="{fileDataModel>DepositDate}" />
+                        </t:template>
+                    </t:Column>
+                    <t:Column id="colAsgnamt">
+                        <Label id="lblAsgnamt" text="Assigned Amount"/>
+                        <t:template>
+                            <Input id="text7" value="{ path: 'fileDataModel>AssignedAmt', type: 'sap.ui.model.type.Float', formatOptions: { minFractionDigits: 2, maxFractionDigits: 2 } }"/>
+                        </t:template>
+                    </t:Column>
+                    <t:Column id="colCmsclosedt">
+                        <Label id="lblCmsclosedt" text="CMS Close Date"/>
+                         <t:template>
+                            <Text id="text8" text="{fileDataModel>CMSCloseDate}" />
+                        </t:template>
+                    </t:Column>
+                </t:columns>
+            </t:Table>
+        </content>
+    </Page>
+</mvc:View>

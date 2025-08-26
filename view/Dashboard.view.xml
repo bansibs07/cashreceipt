@@ -1,0 +1,100 @@
+<mvc:View controllerName="bcbsmn.com.cashreceipt.controller.Dashboard"
+    xmlns="sap.m"
+    xmlns:semantic="sap.m.semantic"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:core="sap.ui.core"
+    xmlns:t="sap.ui.table">
+    <semantic:SemanticPage id ="dashboardpage">
+        <semantic:subHeader>
+            <OverflowToolbar id="oft">
+               <Title id="tTabHeader" level="H3"/> 
+                <ToolbarSpacer id="oftspace"/>
+                <Button id="bclearfilter" icon="sap-icon://clear-filter" tooltip="Clear column filters" press="onClearFilters"/>
+                <Button id="bnew" text="Add Cash" type="Ghost" press="onAddCash"/>
+                <Button id="bupload" text="Upload Cash" type="Ghost" press="onUploadCash"/>
+                <!--    <Button id="bclearfilter" text="Clear Filters" type="Emphasized" press="onClearFilters"/> -->
+            </OverflowToolbar>
+        </semantic:subHeader>
+        <semantic:content>
+       
+            <t:Table id="table"  rowHeight="45px" rows="{ path: '/DashboardSet', parameters: {operationMode : 'Client'} }" enableCellFilter="true" selectionBehavior="RowSelector" visibleRowCount="14" visibleRowCountMode="Interactive" alternateRowColors="true" selectionMode="Single" rowSelectionChange="onSelectionChange" ariaLabelledBy="title">
+                <t:columns>
+                    <t:Column id="colLockStatus" tooltip="Lock Status" width="3rem">
+                        <core:Icon id="titleicon" src="sap-icon://locked" />
+                        <t:template>
+                            <core:Icon id="icon" src="{= ${Lockedby} ? 'sap-icon://private' : null}" tooltip="CRN is currently locked by {Lockedby}"  />
+                        </t:template>
+                    </t:Column>
+                    <t:Column id="colCrn" tooltip="CRN" width="6rem" sortProperty="Crn" filterProperty="Crn">
+                        <Label id="lblTask" text="CRN" />
+                        <t:template>
+                            <Text id="txtCrn" text="{Crn}"/>
+                        </t:template>
+                    </t:Column>
+                    <t:Column id="colClaimno" tooltip="Check Number" sortProperty="Checknumber" filterProperty="Checknumber">
+                        <Label id="lblCheckno" text="Check Number"/>
+                        <t:template>
+                            <Text id="txtCheckno" text="{Checknumber}" />
+                        </t:template>
+                    </t:Column>
+                    <t:Column id="colPayee" tooltip="Payee Name" width="15rem" sortProperty="Payeename" filterProperty="Payeename">
+                        <Label id="lblpayee" text="Payee Name"/>
+                        <t:template>
+                            <Text id="txtpayee" text="{Payeename}" tooltip="{Payeename}" wrapping="true"/>
+                        </t:template>
+                    </t:Column>
+                    <t:Column id="colcheckamt" tooltip="Check Amount" hAlign="End" sortProperty="Checkamount" filterProperty="Checkamount">
+                        <Label id="lblCheckamt" text="Check Amount"/>
+                        <t:template>
+                            <Text id="txtAmount" text="{ path: 'Checkamount', type:'sap.ui.model.type.Float'}" textAlign="Right"/>
+                        </t:template>
+                    </t:Column>
+                    <t:Column id="coldepositdt" tooltip="Deposit Date" sortProperty="Depositdate" filterProperty ="Depositdate" filterOperator="EQ" filterType="\{type: 'sap.ui.model.type.DateTime', formatOptions: \{pattern: 'MM/dd/yyyy',UTC: true\}, constraints: \{displayFormat: 'Date'\}\}">
+                        <Label id="lbldepositdate" text="Deposit Date"/>
+                        <t:template>
+                            <Text id="txtDepodate" text="{ path: 'Depositdate', type : 'sap.ui.model.odata.type.DateTime', constraints : {displayFormat : 'Date'}, formatOptions: { pattern: 'MM/dd/yyyy', UTC: true }}" />
+                        </t:template>
+                    </t:Column>
+                    <t:Column id="colDaysaged" tooltip="Days Aging" sortProperty="Daysaged" filterProperty="Daysaged">
+                        <Label id="lblDaysaged" text="Days Aging"/>
+                        <t:template>
+                            <Text id="txtDaysaged" text="{Daysaged}"/>
+                        </t:template>
+                    </t:Column>
+                    <t:Column id="colAssignedamt" tooltip="Assigned Amount" hAlign="End" sortProperty="Assignedamt" filterProperty="Assignedamt">
+                        <Label id="lblAssignedamt" text="Assigned Amount"/>
+                        <t:template>
+                            <Text id="txtAsgnamt" text="{ path: 'Assignedamt', type:'sap.ui.model.type.Float'}" textAlign="Right"/>
+                        </t:template>
+                    </t:Column>
+                    <t:Column id="colMemberid" tooltip="Member Id" sortProperty="Memberid" filterProperty="Memberid">
+                        <Label id="lblMemberid" text="Member Id"/>
+                        <t:template>
+                            <Text id="txtMemberid" text="{Memberid}" />
+                        </t:template>
+                    </t:Column>
+                    <t:Column id="colBalanceamt" tooltip="Remaining Balance" sortProperty="Balanceamt" filterProperty="Balanceamt" hAlign="End">
+                        <Label id="lblBalanceamt" text="Remaining Balance"/>
+                        <t:template>
+                            <Text id="txtBalanceamt" text="{ path: 'Balanceamt', type:'sap.ui.model.type.Float'}" textAlign="Right"/>
+                        </t:template>
+                    </t:Column>
+                    <t:Column id="colStatus" tooltip="Status" sortProperty="Statusdesc" filterProperty="Statusdesc">
+                        <Label id="lblStatus" text="Status"/>
+                        <t:template>
+                            <Text id="ipstatus" text="{Statusdesc}" />
+                        </t:template>
+                    </t:Column>
+                    <t:Column id="colStatusdate" tooltip="Status Change Date" sortProperty="Aedat"
+                    filterProperty ="Aedat" filterOperator="EQ" filterType="\{type: 'sap.ui.model.type.DateTime', formatOptions: \{pattern: 'MM/dd/yyyy',UTC: true\}, constraints: \{displayFormat: 'Date'\}\}">
+                        <Label id="lblStatusdate" text="Status Change Date"/>
+                        <t:template>
+                            <Text id="txtStatusdt" text="{ path: 'Aedat', type : 'sap.ui.model.odata.type.DateTime', constraints : {displayFormat : 'Date'}, formatOptions: { pattern: 'MM/dd/yyyy', UTC: true }}" />
+                        </t:template>
+                    </t:Column>
+                </t:columns>
+            </t:Table>
+        </semantic:content>
+    </semantic:SemanticPage>
+</mvc:View>

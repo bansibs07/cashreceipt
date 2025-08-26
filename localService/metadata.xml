@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZFI_CASH_RECEIPTS_SRV" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="UploadCash" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Crn"/>
+                </Key>
+                <Property Name="Crn" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Cash Receipt Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <NavigationProperty Name="UploadCashToItems" Relationship="ZFI_CASH_RECEIPTS_SRV.UploadCashToItems" FromRole="FromRole_UploadCashToItems" ToRole="ToRole_UploadCashToItems"/>
+            </EntityType>
+            <EntityType Name="UploadCashItems" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Checknumber"/>
+                    <PropertyRef Name="Crn"/>
+                </Key>
+                <Property Name="Checknumber" Type="Edm.String" Nullable="false" MaxLength="13" sap:unicode="false" sap:label="Check number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Payeename" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="Name 1" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Imagenumber" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Image Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Checkamount" Type="Edm.Decimal" Nullable="false" Precision="14" Scale="3" sap:unicode="false" sap:label="Amount" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Crn" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Cash Receipt Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Depositdate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Deposit Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Assignedamt" Type="Edm.Decimal" Nullable="false" Precision="14" Scale="3" sap:unicode="false" sap:label="Amount" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="Dashboard" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Crn"/>
+                    <PropertyRef Name="Checknumber"/>
+                </Key>
+                <Property Name="Crn" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Cash Receipt Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Checknumber" Type="Edm.String" Nullable="false" MaxLength="13" sap:unicode="false" sap:label="Check number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Checkamount" Type="Edm.Decimal" Nullable="false" Precision="14" Scale="3" sap:unicode="false" sap:label="Amount" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Depositdate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Deposit Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Imagenumber" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Image Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Payeename" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="Name 1" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Assignedamt" Type="Edm.Decimal" Nullable="false" Precision="14" Scale="3" sap:unicode="false" sap:label="Amount" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Asgngroup" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Group" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Status" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Daysaged" Type="Edm.Byte" Nullable="false" sap:unicode="false" sap:label="DAYSAGED" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Aenam" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="User Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <Association Name="UploadCashToItems" sap:content-version="1">
+                <End Type="ZFI_CASH_RECEIPTS_SRV.UploadCash" Multiplicity="1" Role="FromRole_UploadCashToItems"/>
+                <End Type="ZFI_CASH_RECEIPTS_SRV.UploadCashItems" Multiplicity="*" Role="ToRole_UploadCashToItems"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_UploadCashToItems">
+                        <PropertyRef Name="Crn"/>
+                    </Principal>
+                    <Dependent Role="ToRole_UploadCashToItems">
+                        <PropertyRef Name="Crn"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <EntityContainer Name="ZFI_CASH_RECEIPTS_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="UploadCashSet" EntityType="ZFI_CASH_RECEIPTS_SRV.UploadCash" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="UploadCashItemsSet" EntityType="ZFI_CASH_RECEIPTS_SRV.UploadCashItems" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="DashboardSet" EntityType="ZFI_CASH_RECEIPTS_SRV.Dashboard" sap:deletable="false" sap:searchable="true" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <AssociationSet Name="UploadCashToItems_AssocSet" Association="ZFI_CASH_RECEIPTS_SRV.UploadCashToItems" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="UploadCashSet" Role="FromRole_UploadCashToItems"/>
+                    <End EntitySet="UploadCashItemsSet" Role="ToRole_UploadCashToItems"/>
+                </AssociationSet>
+            </EntityContainer>
+            <atom:link rel="self" href="https://vhbcbdv1ci.hec.bcbsmn.com:44300/sap/opu/odata/sap/ZFI_CASH_RECEIPTS_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="https://vhbcbdv1ci.hec.bcbsmn.com:44300/sap/opu/odata/sap/ZFI_CASH_RECEIPTS_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

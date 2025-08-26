@@ -1,0 +1,14 @@
+<mvc:View xmlns:core="sap.ui.core" controllerName="bcbsmn.com.cashreceipt.controller.App"
+  xmlns:html="http://www.w3.org/1999/xhtml"
+  xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+  xmlns="sap.m">
+  <VBox id="image" justifyContent="Center" alignItems="Center">
+    <items>
+      <Image id="radarimage" src="{value: 'bcbsmn/com/cashreceipt/images/RADAR_Icon.png', 
+        formatter: 'sap.ui.require.toUrl'}" densityAware="false" width="60px" height="60px"/>
+      <Title id="title" text="Receivables Application Data Account Reconciliation" textAlign="Center" width="100%"/>
+    </items>
+  </VBox>
+  <App id="app">
+  </App>
+</mvc:View>

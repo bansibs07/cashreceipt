@@ -1,0 +1,89 @@
+<mvc:View controllerName="bcbsmn.com.cashreceipt.controller.Addcash"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.uxap"
+    xmlns:u="sap.ui.unified"
+    xmlns:m="sap.m"
+    xmlns:semantic="sap.m.semantic"
+    xmlns:f="sap.f"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+    <semantic:SemanticPage id="Addcashpage">
+        <semantic:subHeader>
+            <m:OverflowToolbar id="addcashtoolbar">
+                <m:ToolbarSpacer id="tlbspace"/>
+                <m:Button id="fbsubmit" text="Submit" type="Emphasized" press="onSubmit"/>
+                <m:Button id="fbclear" text="Clear" type="Emphasized" press="onClear"/>
+                <m:Button id="fbback" text="Back" type="Emphasized" press="onBack"/>
+            </m:OverflowToolbar>
+        </semantic:subHeader>
+        <semantic:content>
+            <ObjectPageLayout id="ObjectPageLayout1" showTitleInHeaderContent="false">
+                <sections>
+                    <ObjectPageSection id="opsAddcash" title="Add Cash" titleUppercase="false">
+                        <subSections>
+                            <ObjectPageSubSection id="opssAddcash">
+                                <blocks>
+                                    <form:SimpleForm id="sfaddcash" layout="ColumnLayout" width="100%" editable="true" columnsM="2" columnsL="3">
+                                        <form:content>
+                                            <m:Label id="lblcrnreq" text="CRN" />
+                                            <m:Input id="fcrnreq" width="200px" required="true" tooltip="{i18n&gt;addCashCrnplaceholder}" placeholder="{i18n&gt;addCashCrnplaceholder}" maxLength="7" liveChange="_validateNumericField" value="{ path: 'addCashModel>/Crn', type: 'sap.ui.model.type.Integer' }" />
+                                            <m:Label id="lblimageno" text="Image Number" />
+                                            <m:Input id="fimageno" width="200px" required="true" tooltip="{i18n&gt;addCashImageplaceholder}" placeholder="{i18n&gt;addCashImageplaceholder}" maxLength="12" liveChange="_validateNumericField" value="{ path: 'addCashModel>/Imagenumber', type: 'sap.ui.model.type.Integer' }" />
+                                        </form:content>
+                                    </form:SimpleForm>
+                                </blocks>
+                            </ObjectPageSubSection>
+                        </subSections>
+                    </ObjectPageSection>
+                    <ObjectPageSection id="opsAddcashreceiptinfo" title="Receipt Information" titleUppercase="false">
+                        <subSections>
+                            <ObjectPageSubSection id="opssReceiptinfo">
+                                <blocks>
+                                    <form:SimpleForm id="sfaddcashreceiptinfo" layout="ColumnLayout" width="100%" editable="true" columnsM="2" columnsL="3">
+                                        <form:content>
+                                            <m:Label id="lblchecknumber" text="Check Number" />
+                                            <m:Input id="fchecknumber" width="200px" maxLength="13" tooltip="{i18n&gt;addCashCheckplaceholder}" placeholder="{i18n&gt;addCashCheckplaceholder}" showClearIcon="true" required="true" liveChange="_validateNumericField" value="{ path: 'addCashModel>/Checknumber', type: 'sap.ui.model.type.Integer' }" />
+                                            <m:Label id="lbldepositdt" text="Deposit Date" />
+                                            <m:DatePicker id="fdepositdate" width="200px" required="true" value="{ path: 'addCashModel>/Depositdate' , type: 'sap.ui.model.type.Date' , formatOptions: { pattern: 'MM/dd/yyyy' , UTC: true } }" />
+                                            <m:Label id="lblcheckamount" text="Check Amount" />
+                                            <m:Input id="fcheckamount" width="200px" required="true" placeholder="0.00" liveChange="_validateAmountField" value="{ path: 'addCashModel>/Checkamount', type: 'sap.ui.model.type.Float', formatOptions: { minFractionDigits: 2, maxFractionDigits: 2 } }" />
+                                            <m:Label id="lblcmsclosedate" text="CMS Close Date" />
+                                            <m:DatePicker id="fcmsclosedate" width="200px" required="true" value="{ path: 'addCashModel>/Cmsclosedate' , type: 'sap.ui.model.type.Date' , formatOptions: { pattern: 'MM/dd/yyyy' , UTC: true } }" />
+                                            <m:Label id="lblasgamt" text="Assigned Amount" />
+                                            <m:Input id="fasgamt" width="200px" required="true" placeholder="0.00" liveChange="_validateAmountField" value="{ path: 'addCashModel>/Assignedamt', type: 'sap.ui.model.type.Float', formatOptions: { minFractionDigits: 2, maxFractionDigits: 2 } }" />
+                                        </form:content>
+                                    </form:SimpleForm>
+                                </blocks>
+                            </ObjectPageSubSection>
+                        </subSections>
+                    </ObjectPageSection>
+                    <ObjectPageSection id="opsAddcashpayeeinfo" title="Payee Information" titleUppercase="false">
+                        <subSections>
+                            <ObjectPageSubSection id="opssPayeeinfo">
+                                <blocks>
+                                    <form:SimpleForm id="sfpayeeinfo" layout="ColumnLayout" editable="true" columnsM="2" columnsL="3">
+                                        <form:content>
+                                            <m:Label id="lblPayee" text="Payee Name" />
+                                            <m:Input id="fPayee" width="250px" maxLength="35" value="{addCashModel>/Payeename}" liveChange="_toUppercase" />
+                                            <m:Label id="lblPayeeid" text="Payee ID" />
+                                            <m:Input id="fPayeeid" maxLength="10" width="200px" value="{addCashModel>/Payeeid}"/>
+                                            <m:Label id="lblPayeeadd" text="Street Address" />
+                                            <m:Input id="fPayeeadd" maxLength="35" width="250px" value="{addCashModel>/Street}" liveChange="_toUppercase"/>
+                                            <m:Label id="lblPayeecity" text="City" />
+                                            <m:Input id="fPayeecity" maxLength="35" width="200px" value="{addCashModel>/City}" liveChange="_toUppercase"/>
+                                            <m:Label id="lblState" text="State"/>
+                                            <m:Input id="fState" maxLength="3" value="{addCashModel>/State}" width="130px" liveChange="_toUppercase"/>
+                                            <m:Label id="lblPayeezip" text="Zip"/>
+                                            <m:Input id="fPayeezip" maxLength="10" width="130px" liveChange="_validateNumericField" value="{ path: 'addCashModel>/Zip', type: 'sap.ui.model.type.Integer' }"/>
+                                        </form:content>
+                                    </form:SimpleForm>
+                                </blocks>
+                            </ObjectPageSubSection>
+                        </subSections>
+                    </ObjectPageSection>
+                </sections>
+            </ObjectPageLayout>
+        </semantic:content>
+    </semantic:SemanticPage>
+</mvc:View>

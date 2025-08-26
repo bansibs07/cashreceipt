@@ -1,0 +1,194 @@
+<mvc:View controllerName="bcbsmn.com.cashreceipt.controller.Workingcash"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.uxap"
+    xmlns:u="sap.ui.unified"
+    xmlns:semantic="sap.m.semantic"
+    xmlns:m="sap.m"
+    xmlns:f="sap.f"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:upload="sap.m.upload"
+    xmlns:t="sap.ui.table"
+    xmlns:core="sap.ui.core">
+    <semantic:SemanticPage id="page">
+        <semantic:subHeader>
+            <m:OverflowToolbar id="oft1">
+                <m:ToolbarSpacer id="oftspace1"/>
+                <m:Button id="fberrors" icon="sap-icon://message-popup" tooltip="Validation Errors" press="handleMessagePopoverPress"/>
+                <m:Button id="fbModify" text="Edit" type="Emphasized" press="onModify"/>
+                <m:Button id="fbtnSubmit" text="Submit" type="Emphasized" press="onSubmit"/>
+                <m:Button id="fbtnBack" text="Back" type="Emphasized" press="onBack"/>
+            </m:OverflowToolbar>
+        </semantic:subHeader>
+        <semantic:content>
+            <ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="false">
+                <sections>
+                    <ObjectPageSection id="opsWorkingcash" title="Working Cash" titleUppercase="false">
+                        <subSections>
+                            <ObjectPageSubSection id="opss1">
+                                <blocks>
+                                    <form:SimpleForm id="sfworkingcash" layout="ColumnLayout" width="100%" editable="false" columnsM="2" columnsL="3">
+                                        <form:content>
+                                            <m:Label id="lblcrn" text="CRN" />
+                                            <m:Input id="fcrn" width="200px" enabled="false" value="{workingCashModel>/Crn}" />
+                                            <m:Label id="lblimage" text="Image Number" />
+                                            <m:Input id="fimage" width="200px" maxLength="12" enabled="{settingsModel>/imageEnabled}" required="{settingsModel>/headerRequired}" value="{ path:'workingCashModel>/Imagenumber', type: 'sap.ui.model.type.Integer' }" placeholder="{i18n&gt;addCashImageplaceholder}" liveChange="_validateNumericField" />
+                                        </form:content>
+                                    </form:SimpleForm>
+                                </blocks>
+                            </ObjectPageSubSection>
+                        </subSections>
+                    </ObjectPageSection>
+                    <ObjectPageSection id="opsReceiptinfo" title="Receipt Information" titleUppercase="false">
+                        <subSections>
+                            <ObjectPageSubSection id="opss2">
+                                <blocks>
+                                    <form:SimpleForm id="sfreceiptinfo" layout="ColumnLayout" width="100%" editable="true" columnsM="2" columnsL="3">
+                                        <form:content>
+                                            <m:Label id="lblcheck" text="Check Number" />
+                                            <m:Input id="fcheck" width="200px" maxLength="7" placeholder="{i18n&gt;addCashCheckplaceholder}" enabled="{settingsModel>/receiptinfoEnabled}" required="{settingsModel>/headerRequired}" value="{ path: 'workingCashModel>/Checknumber', type: 'sap.ui.model.type.String' }" liveChange="_validateNumericField" />
+                                            <m:Label id="lbldate" text="Deposit Date" />
+                                            <m:DatePicker id="fdepositdt" width="200px" enabled="{settingsModel>/receiptinfoEnabled}" required="{settingsModel>/headerRequired}" value="{ path: 'workingCashModel>/Depositdate' , type: 'sap.ui.model.type.Date' , formatOptions: { pattern: 'MM/dd/yyyy' , UTC: true } }" />
+                                            <m:Label id="lblcmsdate" text="CMS Close Date" />
+                                            <m:DatePicker id="fcmsdt" width="200px" enabled="{settingsModel>/receiptinfoEnabled}" required="{settingsModel>/headerRequired}" value="{ path: 'workingCashModel>/Cmsclosedate' , type: 'sap.ui.model.type.Date' , formatOptions: { pattern: 'MM/dd/yyyy' , UTC: true } }" />
+                                            <m:Label id="lblamount" text="Check Amount" />
+                                            <m:Input id="famount" width="200px" placeholder="0.00" enabled="{settingsModel>/receiptinfoEnabled}" required="{settingsModel>/headerRequired}" value="{ path: 'workingCashModel>/Checkamount', type: 'sap.ui.model.type.Float', formatOptions: { minFractionDigits: 2, maxFractionDigits: 2 } }" liveChange="_validateAmountField" />
+                                            <m:Label id="lblbalanceamt" text="Remaining Balance" />
+                                            <m:Input id="fbalanceamt" width="200px" enabled="false" value="{ path: 'workingCashModel>/Balanceamt', type: 'sap.ui.model.type.Float', formatOptions: { minFractionDigits: 2, maxFractionDigits: 2 } }" />
+                                            <m:Label id="lblasgnamt" text="Assigned Amount" />
+                                            <m:Input id="fasgnamt" width="200px" enabled="{settingsModel>/receiptinfoEnabled}" placeholder="0.00" required="{settingsModel>/headerRequired}" value="{ path: 'workingCashModel>/Assignedamt' , type: 'sap.ui.model.type.Float', formatOptions: { minFractionDigits: 2, maxFractionDigits: 2 } }" liveChange="_validateAmountField" />
+                                            <m:Label id="lblcaseno" text="Case Number" />
+                                            <m:Input id="fcaseno" width="200px" maxLength="15" enabled="false" value="{ path:'workingCashModel>/Casenumber', type:'sap.ui.model.type.String' }" />
+                                            <m:Label id="lblperson" text="Person" />
+                                            <m:Input id="fperson" width="200px" enabled="{settingsModel>/personEnabled}" type="Text" value="{workingCashModel>/Person}" liveChange="_toUppercase"/>
+                                        </form:content>
+                                    </form:SimpleForm>
+                                </blocks>
+                            </ObjectPageSubSection>
+                        </subSections>
+                    </ObjectPageSection>
+                    <ObjectPageSection id="opsPayeeinfo" title="Payee Information" titleUppercase="false">
+                        <subSections>
+                            <ObjectPageSubSection id="opss3">
+                                <blocks>
+                                    <form:SimpleForm id="sf3" layout="ColumnLayout" width="100%" editable="true" columnsM="2" columnsL="3">
+                                        <form:content>
+                                            <m:Label id="lblpayeename" text="Payee Name" />
+                                            <m:Input id="fpayeename" width="250px" enabled="{settingsModel>/payeeinfoEnabled}" maxLength="35" value="{workingCashModel>/Payeename}" liveChange="_toUppercase"/>
+                                            <m:Label id="lblpayeeid" text="Payee ID" />
+                                            <m:Input id="fpayeeid" maxLength="10" enabled="{settingsModel>/payeeinfoEnabled}" width="200px" value="{ path: 'workingCashModel>/Payeeid', type: 'sap.ui.model.type.String'}"/>
+                                            <!--    <m:Label id="lblrefundchk" text="BCBS Refund Check #" />
+                                            <m:Input id="frefundchk" maxLength="7" enabled="{settingsModel>/refundchkEnabled}" width="200px" liveChange="_validateNumericField" value="{ path: 'workingCashModel>/Bcbsrefcheck', type: 'sap.ui.model.type.String' }"/> -->
+                                            <m:Label id="lblpayeeadd" text="Street Address" />
+                                            <m:Input id="fpayeeadd" enabled="{settingsModel>/payeeinfoEnabled}" maxLength="35" width="250px" value="{workingCashModel>/Street}" liveChange="_toUppercase"/>
+                                            <m:Label id="lblpayeecity" text="City" />
+                                            <m:Input id="fpayeecity" enabled="{settingsModel>/payeeinfoEnabled}" maxLength="35" width="200px" value="{workingCashModel>/City}" liveChange="_toUppercase"/>
+                                            <m:Label id="lblstate" text="State"/>
+                                            <m:Input id="fstate" enabled="{settingsModel>/payeeinfoEnabled}" width="130px" maxLength="3" value="{workingCashModel>/State}" liveChange="_toUppercase"/>
+                                            <m:Label id="lblpayeezip" text="Zip"/>
+                                            <m:Input id="fpayeezip" enabled="{settingsModel>/payeeinfoEnabled}" width="130px" maxLength="10" liveChange="_validateNumericField" value="{ path: 'workingCashModel>/Zip', type: 'sap.ui.model.type.String' }"/>
+                                        </form:content>
+                                    </form:SimpleForm>
+                                </blocks>
+                            </ObjectPageSubSection>
+                        </subSections>
+                    </ObjectPageSection>
+                    <ObjectPageSection id="opsReceiptdetails" title="Receipt Details" titleUppercase="false">
+                        <subSections>
+                            <ObjectPageSubSection id="opsrd">
+                                <blocks>
+                                    <t:Table id="table" rows="{ path: 'workingCashModel>/GetReceiptDetails/results' }" selectionMode="Single" rowSelectionChange="onSelectionChange" ariaLabelledBy="title">
+                                        <t:rowSettingsTemplate>
+                                            <t:RowSettings id="rowsetting" highlight="{= ${workingCashModel>Status} === 'ER' ? 'Error' : null}" />
+                                        </t:rowSettingsTemplate>
+                                        <t:extension>
+                                            <m:OverflowToolbar id="oft2">
+                                                <m:Button id="baddrow" icon="sap-icon://add" tooltip="Add Row" press="onAddRow"/>
+                                                <m:Button id="bdeleterow" icon="sap-icon://less" tooltip="Delete Row" press="onDeleteRow" />
+                                                <m:Button id="bcopyrow" icon="sap-icon://split" tooltip="Split Row" press="onCopyRow" />
+                                            </m:OverflowToolbar>
+                                        </t:extension>
+                                        <t:columns>
+                                            <t:Column id="colTask">
+                                                <m:Label id="lbltask" text="Task"/>
+                                                <t:template>
+                                                    <m:Select id="selTask" change="onTaskChange" enabled="{workingCashModel>Enabled}" forceSelection="false" selectedKey="{workingCashModel>Task}" items="{ path:'/TaskSet', templateShareable: false }">
+                                                        <core:Item id="itemtask" key="{Key}" text="{Value}" enabled="{path: 'Key', formatter: '.formatter.enableTask'}"/>
+                                                    </m:Select>
+                                                </t:template>
+                                            </t:Column>
+                                            <t:Column id="colclaimno" width="150px">
+                                                <m:Label id="lblClaimno" text="Claim Number"/>
+                                                <t:template>
+                                                    <m:Input id="ipCrn" maxLength="12" value="{workingCashModel>Claimnumber}" enabled="{workingCashModel>Enabled}"/>
+                                                </t:template>
+                                            </t:Column>
+                                            <t:Column id="colAssignedamt" width="150px">
+                                                <m:Label id="lblassignedamt" text="Assigned Amount"/>
+                                                <t:template>
+                                                    <m:Input id="ipAssignamt" required="true" value="{ path: 'workingCashModel>Assignedamt', type: 'sap.ui.model.type.Float', formatOptions: { minFractionDigits: 2, maxFractionDigits: 2 } }" enabled="{workingCashModel>Enabled}" />
+                                                </t:template>
+                                            </t:Column>
+                                            <t:Column id="colMemberid" width="150px">
+                                                <m:Label id="lblmemberid" text="Member ID"/>
+                                                <t:template>
+                                                    <m:Input id="ipMemberid" value="{workingCashModel>Memberid}" enabled="{workingCashModel>Enabled}"/>
+                                                </t:template>
+                                            </t:Column>
+                                            <t:Column id="colPrn" width="200px">
+                                                <m:Label id="lblPrn" text="BCBS Refund Check #" tooltip="BCBS Refund Check #"/>
+                                                <t:template>
+                                                    <m:Input id="ipPrn" value="{workingCashModel>Prn}" enabled="false"/>
+                                                </t:template>
+                                            </t:Column>
+                                            <t:Column id="colAsgngroup">
+                                                <m:Label id="lblAsgngroup" text="Group"/>
+                                                <t:template>
+                                                    <m:Select id="selAsgngroup" forceSelection="false" selectedKey="{workingCashModel>Asgngroup}" items="{ path:'/GroupSet', templateShareable: false }" enabled="{workingCashModel>Enabled}">
+                                                        <core:Item id="itemasgngroup" key="{Key}" text="{Value}" enabled="{path: 'Key', formatter: '.formatter.disableGroup'}"/>
+                                                    </m:Select>
+                                                </t:template>
+                                            </t:Column>
+                                            <t:Column id="colNotes">
+                                                <m:Label id="lblNotes" text="Comments"/>
+                                                <t:template>
+                                                    <m:Input id="ipNotes" value="{workingCashModel>newNotes}" enabled="{workingCashModel>Enabled}"/> <!--Latestnote-->
+                                                </t:template>
+                                            </t:Column>
+                                            <t:Column id="colExpandnotes" width="50px">
+                                                <m:Label id="lblExpandnotes"/>
+                                                <t:template>
+                                                    <m:Button id="bexpandnotes" icon="sap-icon://zoom-in" tooltip="View Comments" press="onViewComments"/>
+                                                </t:template>
+                                            </t:Column>
+                                        </t:columns>
+                                    </t:Table>
+                                </blocks>
+                            </ObjectPageSubSection>
+                        </subSections>
+                    </ObjectPageSection>
+                    <ObjectPageSection id="opsAttachments" title="Attachments" titleUppercase="false">
+                        <subSections>
+                            <ObjectPageSubSection id="ops5">
+                                <blocks>
+                                    <!--   <upload:UploadSet id="idAttach" showIcons="false" uploadEnabled="true" instantUpload="true" terminationEnabled="true" uploadUrl="/sap/opu/odata/sap/ZFI_CASH_RECEIPTS_SRV/AttachmentsSet" items="{path: 'attachModel>/items'}" beforeUploadStarts="onBeforeUploadStarts" uploadCompleted="onUploadComplete">
+                                        <upload:items>
+                                            <upload:UploadSetItem id="ua" fileName="{attachModel>FileName}" visibleEdit="false" url="{parts: [{path:'attachModel>Crn'},{path:'attachModel>AttachmentNo'}], formatter: '.formatter.getUrl'}" enabledRemove="{attachModel>IsRemovable}" removePressed="onFileDelete">
+                                            </upload:UploadSetItem>
+                                        </upload:items>
+                                    </upload:UploadSet> -->
+                                    <m:UploadCollection id="idAttach" maximumFilenameLength="100" multiple="false" instantUpload="true" uploadComplete="onUploadComplete" fileDeleted="onFileDelete" beforeUploadStarts="onBeforeUploadStarts" uploadButtonInvisible="false" uploadEnabled="true" items="{ path: 'attachModel>/items', templateShareable: true }" mode="None" change="onChange" uploadUrl="/sap/opu/odata/sap/ZFI_CASH_RECEIPTS_SRV/AttachmentsSet">
+                                        <m:items>
+                                            <m:UploadCollectionItem id="ua" documentId="{attachModel>AttachmentNo}" fileName="{attachModel>FileName}" mimeType="{attachModel>FileType}" thumbnailUrl="" url="{parts:[{path:'attachModel>Crn'},{path:'attachModel>AttachmentNo'}], formatter: '.formatter.getUrl'}" enableEdit="false" enableDelete="{attachModel>IsRemovable}" visibleDelete="true" visibleEdit="false"/>
+                                        </m:items>
+                                    </m:UploadCollection>
+                                </blocks>
+                            </ObjectPageSubSection>
+                        </subSections>
+                    </ObjectPageSection>
+                </sections>
+            </ObjectPageLayout>
+        </semantic:content>
+    </semantic:SemanticPage>
+
+</mvc:View>

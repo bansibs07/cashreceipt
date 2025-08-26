@@ -1,0 +1,7 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <FeedInput id="enterComments" post="onPost" class="sapUiSmallMarginTopBottom" />
+    <List id="commentsList" showSeparators="Inner" items="{commentsModel}">
+        <FeedListItem id="commentsItem" sender="{commentsModel>User}" timestamp="{commentsModel>Timestamp}" text="{commentsModel>Notes}" />
+    </List>
+</core:FragmentDefinition>
