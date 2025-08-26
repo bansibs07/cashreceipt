@@ -6,7 +6,7 @@ sap.ui.define([
 
   return BaseController.extend("bcbsmn.com.cashreceipt.controller.App", {
     onInit: function () {
-
+     console.log("test commit");
     }
   });
 }
